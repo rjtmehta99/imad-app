@@ -5,13 +5,40 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
-var articleOne=
+var articles=
 {
+    'article-one':
+    {
     title: 'Article One',
     heading:'Article One',
+    url:`<img src="https://s-media-cache-ak0.pinimg.com/736x/df/d9/35/dfd935d04bfb1956520526c7d0d527a5--yellow-coldplay-lyrics-quote-design.jpg" style="vertical-align:top" alt="Image Not Displayed">`,
     date:'August 14th, 2017',
     content:`Look at the stars, 
                 Look how they shine for you!`
+                
+},
+
+    'article-two': 
+    {
+    title: 'Article Two',
+    heading:'Article Two',
+    url:`<img src="http://www.stephaniedaily.com/wp-content/uploads/2014/08/coldplay.jpg" alt="Image Not Displayed">`,
+    date:'August 14th, 2017',
+    content:`Cause you're a sky,
+             You're a sky full of stars.`
+},
+
+    'article-three':
+    {
+    title: 'Article Two',
+    heading:'Article Two',
+    url:`<img src="https://s-media-cache-ak0.pinimg.com/236x/4b/e8/17/4be817950359dbfdfb642d24d078abac--cellphone-wallpaper-phone-wallpapers.jpg" alt="Image Not Displayed">`,
+    date:'August 14th, 2017',
+    content:`Lights will guide you home,
+             And I will try to fix you.`
+
+}
+
 };
 
 function createTemplate(data)
@@ -20,6 +47,7 @@ function createTemplate(data)
         var title = data.title;
         var heading = data.heading;
         var content = data.content;
+        var url = data.url;
         var htmlTemplate = `<html>
         
         <head>
@@ -49,8 +77,8 @@ function createTemplate(data)
                     <p style="text-align:center">
                         ${content}
                     </p>
-                    <img src="https://s-media-cache-ak0.pinimg.com/736x/df/d9/35/dfd935d04bfb1956520526c7d0d527a5--yellow-coldplay-lyrics-quote-design.jpg" style="vertical-align:top" alt="Image Not Displayed">
-                </div>
+                        ${url}
+                                    </div>
             
             
             </div>
@@ -68,9 +96,12 @@ app.get('/', function (req, res)
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/article-one', function(req,res)
+app.get('/:articleName', function(req,res)
 {
-   res.send(createTemplate(articleOne));
+    //articalName== article-one
+    //articals[articalName] == {} content object for article one 
+   var articleName = req.params.articleName;
+   res.send(createTemplate(articles[articalName]));
 });
 
 app.get('/article-two', function(req,res)
