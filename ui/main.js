@@ -34,13 +34,13 @@ button.onclick = function()
             {
                 var counter = request.responseText;
                 var span= document.getElementById('count');
-    span.innerHTML = counter.toString();            
+                span.innerHTML = counter.toString();            
             }
         }
     };
     
     //Make a request
-    request.open('GET', 'http://rjtmehta.imad.hasura-app.io/counter', true);
+    request.open('GET', 'http://rjtmehta99.imad.hasura-app.io/counter', true);
     request.send(null);
     
 };
