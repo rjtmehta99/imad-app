@@ -18,16 +18,29 @@ img.onclick = function()
 
 //Counter Code
 var button = document.getElementById('counter');
-var counter = 0;
+
 button.onclick = function()
 {
-    //Make request to the counter end point
-    
+    //Create a request
+    var request = new XMLHttpRequest();
+  
     //Capture the response and store it in the variable
+    request.onreadystatechange = function()
+    {
+        if(request.readyState === XMLHttpRequest.DONE)
+        {
+            //Take some action
+            if(request.status === 200)
+            {
+                var counter = request.responseText;
+                var span= document.getElementById('count');
+    span.innerHTML = counter.toString();            
+            }
+        }
+    };
     
-    //Render the variable in the correct span
-    counter= counter+1;
-    var span= document.getElementById('count');
-    span.innerHTML = counter.toString();
+    //Make a request
+    request.open('GET', 'http://rjtmehta.imad.hasura-app.io/counter', true);
+    request.send(null);
     
 };
